@@ -89,6 +89,7 @@ export async function ensureHeaders(): Promise<void> {
 }
 
 export async function getAllProfiles(): Promise<Profile[]> {
+  await ensureSheetAndHeaders();
   const sheets = getSheets();
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId: SPREADSHEET_ID(),
