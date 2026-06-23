@@ -16,22 +16,19 @@ export default function HomePage() {
   useEffect(() => {
     fetch('/api/cards')
       .then(r => r.json())
-      .then((data: unknown) => {
-        setProfiles(Array.isArray(data) ? data : []);
-        setLoading(false);
-      })
+      .then((data: unknown) => { setProfiles(Array.isArray(data) ? data : []); setLoading(false); })
       .catch(() => setLoading(false));
-    const saved: string[] = JSON.parse(localStorage.getItem('sg-hearts') || '[]');
-    setFavorites(saved);
+    setFavorites(JSON.parse(localStorage.getItem('sg-hearts') || '[]'));
   }, []);
 
   useEffect(() => {
-    const onStorage = () => {
-      setFavorites(JSON.parse(localStorage.getItem('sg-hearts') || '[]'));
-    };
+    const onStorage = () => setFavorites(JSON.parse(localStorage.getItem('sg-hearts') || '[]'));
     window.addEventListener('storage', onStorage);
     return () => window.removeEventListener('storage', onStorage);
   }, []);
+
+  const maleCount = profiles.filter(p => p.gender === '남성').length;
+  const femaleCount = profiles.filter(p => p.gender === '여성').length;
 
   const filtered = profiles.filter(p => {
     if (showFavorites) return favorites.includes(p.id);
@@ -40,19 +37,28 @@ export default function HomePage() {
   });
 
   return (
-    <main className="min-h-screen" style={{ background: '#F5F5F7' }}>
+    <main className="min-h-screen" style={{ background: '#080B1A' }}>
       {/* Header */}
-      <header style={{ background: 'linear-gradient(160deg, #1A1F3A 0%, #111827 100%)' }} className="px-5 pt-14 pb-7">
-        <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: '#C9A84C' }}>
-          💝 Blind Date
+      <header className="px-5 pt-16 pb-6 text-center">
+        <p className="text-xs font-semibold tracking-[0.2em] uppercase mb-3" style={{ color: 'rgba(255,255,255,0.4)' }}>
+          ✦ BLIND DATE MATCHING ✦
         </p>
-        <h1 className="font-serif text-white text-3xl font-bold leading-snug">
-          당신의 인연을<br />
-          <span className="text-gradient-gold">찾아보세요</span>
+        <h1 className="font-serif font-bold text-4xl text-white mb-2">
+          소개팅 매칭 <span className="not-italic">💕</span>
         </h1>
-        <p className="text-white/40 text-sm mt-3">
-          {loading ? '불러오는 중...' : `${profiles.length}명의 후보`}
+        <p className="text-sm mb-5" style={{ color: 'rgba(255,255,255,0.4)' }}>
+          당신의 특별한 인연을 찾아보세요
         </p>
+        {!loading && (
+          <div className="flex items-center justify-center gap-2">
+            <span className="px-3 py-1.5 rounded-full text-xs font-semibold" style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)' }}>
+              남성 {maleCount}명
+            </span>
+            <span className="px-3 py-1.5 rounded-full text-xs font-semibold" style={{ background: 'rgba(251,96,130,0.15)', color: '#FC93A8', border: '1px solid rgba(251,96,130,0.3)' }}>
+              여성 {femaleCount}명
+            </span>
+          </div>
+        )}
       </header>
 
       {/* Filter */}
@@ -62,23 +68,21 @@ export default function HomePage() {
         showFavorites={showFavorites}
         onToggleFavorites={() => setShowFavorites(v => !v)}
         favoritesCount={favorites.length}
+        maleCount={maleCount}
+        femaleCount={femaleCount}
+        totalCount={profiles.length}
       />
 
-      {/* Grid */}
-      <div className="max-w-2xl lg:max-w-4xl mx-auto px-4 py-5 pb-20">
+      {/* Cards */}
+      <div className="max-w-lg mx-auto px-4 py-5 pb-20">
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="w-full rounded-3xl bg-gray-200 animate-pulse" style={{ aspectRatio: '3/4' }} />
+          <div className="flex flex-col gap-4">
+            {Array.from({ length: 2 }).map((_, i) => (
+              <div key={i} className="w-full rounded-3xl animate-pulse h-80" style={{ background: 'rgba(255,255,255,0.05)' }} />
             ))}
           </div>
         ) : (
-          <CardGrid
-            profiles={filtered}
-            favorites={favorites}
-            onFavoritesChange={setFavorites}
-            matchScores={{}}
-          />
+          <CardGrid profiles={filtered} favorites={favorites} onFavoritesChange={setFavorites} matchScores={{}} />
         )}
       </div>
     </main>

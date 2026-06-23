@@ -15,7 +15,17 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    let profiles = IS_MOCK ? MOCK_PROFILES : await getAllProfiles();
+    let profiles;
+    if (IS_MOCK) {
+      profiles = MOCK_PROFILES;
+    } else {
+      try {
+        profiles = await getAllProfiles();
+      } catch (sheetsError) {
+        console.error('Google Sheets error (falling back to mock):', sheetsError);
+        profiles = MOCK_PROFILES;
+      }
+    }
 
     if (!adminParam) {
       profiles = profiles.filter(p => p.status === '모집중');
@@ -24,7 +34,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(profiles);
   } catch (error) {
     console.error('GET /api/cards error:', error);
-    return NextResponse.json({ error: 'Failed to fetch profiles' }, { status: 500 });
+    return NextResponse.json(MOCK_PROFILES.filter(p => p.status === '모집중'));
   }
 }
 

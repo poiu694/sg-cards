@@ -87,19 +87,19 @@ export default function AdminPage() {
   };
 
   return (
-    <main className="min-h-screen bg-cream">
+    <main className="min-h-screen" style={{ background: '#080B1A' }}>
       {/* Header */}
-      <header className="bg-navy px-4 pt-12 pb-5">
+      <header className="px-4 pt-12 pb-5" style={{ background: 'rgba(28,32,64,0.6)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <div className="max-w-4xl mx-auto flex items-start justify-between">
           <div>
-            <p className="text-gold text-xs font-semibold tracking-widest uppercase mb-1">Admin</p>
+            <p className="text-xs font-semibold tracking-[0.2em] uppercase mb-1" style={{ color: 'rgba(201,168,76,0.8)' }}>✦ ADMIN ✦</p>
             <h1 className="font-serif text-white text-xl font-bold">관리자 대시보드</h1>
           </div>
           <div className="flex gap-2 mt-1">
-            <button onClick={() => router.push('/admin/preview')} className="text-white/60 text-sm px-3 py-2 rounded-xl hover:bg-white/10 tap-target transition-all">
+            <button onClick={() => router.push('/admin/preview')} className="text-sm px-3 py-2 rounded-xl tap-target transition-all" style={{ color: 'rgba(255,255,255,0.5)' }}>
               미리보기
             </button>
-            <button onClick={handleLogout} className="text-white/60 text-sm px-3 py-2 rounded-xl hover:bg-white/10 tap-target transition-all">
+            <button onClick={handleLogout} className="text-sm px-3 py-2 rounded-xl tap-target transition-all" style={{ color: 'rgba(255,255,255,0.5)' }}>
               로그아웃
             </button>
           </div>
@@ -108,14 +108,14 @@ export default function AdminPage() {
         {/* Stats */}
         <div className="max-w-4xl mx-auto mt-4 grid grid-cols-4 gap-2">
           {[
-            { label: '전체', value: stats.total, color: 'text-white' },
-            { label: '모집중', value: stats.recruiting, color: 'text-emerald-400' },
-            { label: '매칭완료', value: stats.matched, color: 'text-gray-400' },
-            { label: '숨김/대기', value: stats.hidden, color: 'text-amber-400' },
+            { label: '전체', value: stats.total, color: 'rgba(255,255,255,0.9)' },
+            { label: '모집중', value: stats.recruiting, color: '#6ee7b7' },
+            { label: '매칭완료', value: stats.matched, color: 'rgba(255,255,255,0.4)' },
+            { label: '숨김/대기', value: stats.hidden, color: '#C9A84C' },
           ].map(s => (
-            <div key={s.label} className="bg-white/10 rounded-2xl px-3 py-3 text-center">
-              <p className={`text-xl font-bold ${s.color}`}>{s.value}</p>
-              <p className="text-white/40 text-xs mt-0.5">{s.label}</p>
+            <div key={s.label} className="rounded-2xl px-3 py-3 text-center" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <p className="text-xl font-bold" style={{ color: s.color }}>{s.value}</p>
+              <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.35)' }}>{s.label}</p>
             </div>
           ))}
         </div>
@@ -126,19 +126,22 @@ export default function AdminPage() {
         <div className="flex gap-2 flex-wrap">
           <button
             onClick={() => { setEditProfile(null); setShowAdd(true); }}
-            className="flex items-center gap-2 bg-navy text-white text-sm font-bold px-4 py-3 rounded-2xl tap-target transition-all active:scale-95"
+            className="flex items-center gap-2 text-sm font-bold px-4 py-3 rounded-2xl tap-target transition-all active:scale-95"
+            style={{ background: 'rgba(201,168,76,0.15)', color: '#C9A84C', border: '1px solid rgba(201,168,76,0.3)' }}
           >
             <span>＋</span> 프로필 등록
           </button>
           <button
             onClick={() => setShowPaste(true)}
-            className="flex items-center gap-2 bg-white border-2 border-navy/10 text-navy text-sm font-bold px-4 py-3 rounded-2xl tap-target transition-all active:scale-95"
+            className="flex items-center gap-2 text-sm font-bold px-4 py-3 rounded-2xl tap-target transition-all active:scale-95"
+            style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.7)', border: '1px solid rgba(255,255,255,0.08)' }}
           >
             <span>📋</span> 텍스트 붙여넣기
           </button>
           <button
             onClick={() => router.push('/')}
-            className="flex items-center gap-2 bg-white border-2 border-navy/10 text-navy text-sm font-bold px-4 py-3 rounded-2xl tap-target transition-all active:scale-95 ml-auto"
+            className="flex items-center gap-2 text-sm font-bold px-4 py-3 rounded-2xl tap-target transition-all active:scale-95 ml-auto"
+            style={{ background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.7)', border: '1px solid rgba(255,255,255,0.08)' }}
           >
             🏠 사용자 화면
           </button>
@@ -154,7 +157,7 @@ export default function AdminPage() {
 
         {/* Table */}
         {loading ? (
-          <div className="text-center py-16 text-navy/40">불러오는 중...</div>
+          <div className="text-center py-16" style={{ color: 'rgba(255,255,255,0.3)' }}>불러오는 중...</div>
         ) : (
           <ProfileTable
             profiles={profiles}

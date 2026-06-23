@@ -14,20 +14,16 @@ export default function CardGrid({ profiles }: CardGridProps) {
     return (
       <div className="flex flex-col items-center justify-center py-24 text-center">
         <span className="text-5xl mb-4">💔</span>
-        <p className="text-gray-500 font-medium">해당하는 카드가 없어요</p>
-        <p className="text-gray-400 text-sm mt-1">다른 필터를 선택해 보세요</p>
+        <p className="font-medium" style={{ color: 'rgba(255,255,255,0.4)' }}>해당하는 카드가 없어요</p>
+        <p className="text-sm mt-1" style={{ color: 'rgba(255,255,255,0.25)' }}>다른 필터를 선택해 보세요</p>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="flex flex-col gap-4">
       {profiles.map((profile, index) => (
-        <ProfileCard
-          key={profile.id}
-          profile={profile}
-          index={index}
-        />
+        <ProfileCard key={profile.id} profile={profile} index={index} />
       ))}
     </div>
   );
