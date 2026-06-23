@@ -69,6 +69,7 @@ export default function ProfileCard({ profile, index = 0 }: ProfileCardProps) {
         </div>
 
         {/* 원하는 상대 */}
+        {(profile.preferredPersonality || (profile.preferredJob && profile.preferredJob !== '상관없음')) && (
         <div className="mx-5 mb-3 rounded-2xl p-4" style={{ background: 'rgba(251,96,130,0.08)', border: '1px solid rgba(251,96,130,0.12)' }}>
           <p className="text-sm font-semibold mb-2" style={{ color: '#FC93A8' }}>♡ 원하는 상대</p>
           <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.75)' }}>
@@ -76,6 +77,7 @@ export default function ProfileCard({ profile, index = 0 }: ProfileCardProps) {
             {profile.preferredPersonality}
           </p>
         </div>
+        )}
 
         {/* 주선자 한마디 */}
         {profile.matchmakerNote && (
@@ -97,6 +99,7 @@ export default function ProfileCard({ profile, index = 0 }: ProfileCardProps) {
 }
 
 function InfoBox({ label, value }: { label: string; value: string }) {
+  if (!value || value === '미기재') return null;
   return (
     <div className="rounded-2xl p-3.5" style={{ background: 'rgba(255,255,255,0.05)' }}>
       <p className="text-xs mb-1.5 font-medium" style={{ color: 'rgba(255,255,255,0.35)' }}>{label}</p>
