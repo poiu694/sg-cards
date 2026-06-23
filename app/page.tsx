@@ -16,7 +16,12 @@ export default function HomePage() {
   useEffect(() => {
     fetch('/api/cards')
       .then(r => r.json())
-      .then((data: unknown) => { setProfiles(Array.isArray(data) ? data : []); setLoading(false); })
+      .then((data: unknown) => {
+        if (!Array.isArray(data)) { setLoading(false); return; }
+        const shuffled = [...data].sort(() => Math.random() - 0.5);
+        setProfiles(shuffled);
+        setLoading(false);
+      })
       .catch(() => setLoading(false));
     setFavorites(JSON.parse(localStorage.getItem('sg-hearts') || '[]'));
   }, []);
