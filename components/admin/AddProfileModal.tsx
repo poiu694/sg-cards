@@ -142,6 +142,10 @@ export default function AddProfileModal({ open, initial, onClose, onSave }: AddP
                 <textarea value={form.matchmakerNote} onChange={e => set('matchmakerNote', e.target.value)} style={{ ...inputStyle, resize: 'none' }} rows={2} />
               </Field>
 
+              <Field label="등록자">
+                <input type="text" value={form.registrant || ''} onChange={e => set('registrant', e.target.value)} style={inputStyle} placeholder="예: 홍길동" />
+              </Field>
+
               <Field label="상태">
                 <select value={form.status} onChange={e => set('status', e.target.value as ProfileStatus)} style={inputStyle}>
                   <option value="대기중">대기중 (숨김)</option>

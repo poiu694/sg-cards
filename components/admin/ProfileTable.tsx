@@ -58,6 +58,7 @@ export default function ProfileTable({
             <th className="px-3 py-3 text-left">상태</th>
             <th className="px-3 py-3 text-center">핀</th>
             <th className="px-3 py-3 text-center">찜</th>
+            <th className="px-3 py-3 text-left">등록자</th>
             <th className="px-3 py-3 text-left">관리</th>
           </tr>
         </thead>
@@ -109,6 +110,9 @@ export default function ProfileTable({
                 </td>
                 <td className="px-3 py-3 text-center text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>
                   ❤️ {profile.heartCount}
+                </td>
+                <td className="px-3 py-3 text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                  {profile.registrant || '-'}
                 </td>
                 <td className="px-3 py-3">
                   <div className="flex gap-2">

@@ -6,7 +6,7 @@ const HEADER = [
   'id', 'gender', 'number', 'birthYear', 'mbti', 'height',
   'location', 'personality', 'job', 'jobCategory',
   'preferredJob', 'preferredPersonality', 'matchmakerNote',
-  'status', 'isPinned', 'sortOrder', 'photoUrl', 'heartCount', 'createdAt',
+  'status', 'isPinned', 'sortOrder', 'photoUrl', 'heartCount', 'createdAt', 'registrant',
 ];
 
 function getAuth() {
@@ -45,6 +45,7 @@ function rowToProfile(row: string[]): Profile {
     photoUrl: row[16] || undefined,
     heartCount: Number(row[17]) || 0,
     createdAt: row[18] || new Date().toISOString(),
+    registrant: row[19] || undefined,
   };
 }
 
@@ -54,7 +55,7 @@ function profileToRow(p: Profile): string[] {
     String(p.height), p.location, p.personality, p.job, p.jobCategory,
     p.preferredJob, p.preferredPersonality, p.matchmakerNote,
     p.status, p.isPinned ? 'TRUE' : 'FALSE', String(p.sortOrder),
-    p.photoUrl || '', String(p.heartCount), p.createdAt,
+    p.photoUrl || '', String(p.heartCount), p.createdAt, p.registrant || '',
   ];
 }
 

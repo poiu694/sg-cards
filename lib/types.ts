@@ -21,6 +21,7 @@ export interface Profile {
   photoUrl?: string;
   heartCount: number;
   createdAt: string;
+  registrant?: string;
 }
 
 export type ProfileFormData = Omit<Profile, 'id' | 'heartCount' | 'createdAt'>;
