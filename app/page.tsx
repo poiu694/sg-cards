@@ -45,6 +45,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen" style={{ background: '#080B1A' }}>
       <ShootingStars />
+      <div style={{ position: 'relative', zIndex: 2 }}>
       {/* Header */}
       <header className="px-5 pt-16 pb-6 text-center">
         <p className="text-xs font-semibold tracking-[0.2em] uppercase mb-3" style={{ color: 'rgba(255,255,255,0.4)' }}>
@@ -91,6 +92,7 @@ export default function HomePage() {
         ) : (
           <CardGrid profiles={filtered} favorites={favorites} onFavoritesChange={setFavorites} matchScores={{}} />
         )}
+      </div>
       </div>
     </main>
   );

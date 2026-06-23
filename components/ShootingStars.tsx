@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useState, useCallback } from 'react';
 
 interface Star {
   id: number;
@@ -7,32 +7,43 @@ interface Star {
   left: number;
   length: number;
   duration: number;
-  delay: number;
-  opacity: number;
+  animKey: number;
 }
 
-export default function ShootingStars() {
-  const [stars, setStars] = useState<Star[]>([]);
+function randomStar(id: number): Star {
+  return {
+    id,
+    top: Math.random() * 75,
+    left: Math.random() * 110 - 5,
+    length: Math.random() * 90 + 40,
+    duration: Math.random() * 2.5 + 1.5,
+    animKey: Math.random(),
+  };
+}
 
-  useEffect(() => {
-    setStars(
-      Array.from({ length: 14 }, (_, i) => ({
-        id: i,
-        top: Math.random() * 70,
-        left: Math.random() * 100,
-        length: Math.random() * 90 + 50,
-        duration: Math.random() * 2.5 + 1.8,
-        delay: Math.random() * 12,
-        opacity: Math.random() * 0.45 + 0.25,
-      }))
-    );
+const INITIAL: Star[] = Array.from({ length: 14 }, (_, i) => ({
+  ...randomStar(i),
+  // spread out initial delays by staggering animKey so not all fire at once
+  animKey: i * 0.07,
+}));
+
+export default function ShootingStars() {
+  const [stars, setStars] = useState<Star[]>(INITIAL);
+
+  const respawn = useCallback((id: number) => {
+    setStars(prev => prev.map(s => s.id === id ? randomStar(id) : s));
   }, []);
 
   return (
-    <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', overflow: 'hidden', zIndex: 1 }}>
+    <div style={{
+      position: 'fixed', inset: 0,
+      pointerEvents: 'none', overflow: 'hidden',
+      zIndex: 1,
+    }}>
       {stars.map(s => (
         <div
-          key={s.id}
+          key={`${s.id}-${s.animKey}`}
+          onAnimationEnd={() => respawn(s.id)}
           style={{
             position: 'absolute',
             top: `${s.top}%`,
@@ -40,8 +51,8 @@ export default function ShootingStars() {
             width: `${s.length}px`,
             height: '1.5px',
             borderRadius: '999px',
-            background: `linear-gradient(to right, transparent 0%, rgba(255,255,255,${s.opacity}) 60%, rgba(201,168,76,${s.opacity * 0.6}) 100%)`,
-            animation: `shootingStar ${s.duration}s ${s.delay}s linear infinite`,
+            background: 'linear-gradient(to right, transparent 0%, rgba(255,255,255,0.55) 55%, rgba(201,168,76,0.4) 100%)',
+            animation: `shootingStar ${s.duration}s linear 1 forwards`,
           }}
         />
       ))}
