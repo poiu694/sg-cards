@@ -16,6 +16,20 @@ html, body {
   overscroll-behavior: none;
 }
 
+/* ── Shooting stars ── */
+@keyframes shootingStar {
+  0% {
+    transform: rotate(45deg) translateX(-120px);
+    opacity: 0;
+  }
+  8% { opacity: 1; }
+  75% { opacity: 1; }
+  100% {
+    transform: rotate(45deg) translateX(700px);
+    opacity: 0;
+  }
+}
+
 /* ── Card flip ── */
 .card-scene {
   perspective: 1200px;

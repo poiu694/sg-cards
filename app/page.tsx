@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Profile } from '@/lib/types';
 import CardGrid from '@/components/CardGrid';
 import FilterPanel from '@/components/FilterPanel';
+import ShootingStars from '@/components/ShootingStars';
 
 type GenderFilter = '전체' | '남성' | '여성';
 
@@ -43,6 +44,7 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen" style={{ background: '#080B1A' }}>
+      <ShootingStars />
       {/* Header */}
       <header className="px-5 pt-16 pb-6 text-center">
         <p className="text-xs font-semibold tracking-[0.2em] uppercase mb-3" style={{ color: 'rgba(255,255,255,0.4)' }}>
